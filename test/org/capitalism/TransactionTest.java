@@ -1,5 +1,7 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -14,7 +16,7 @@ public class TransactionTest {
 		
 		seller.createConsumable();
 		
-		final double totalMoney = Money.MoneySupply.getTotalMoney();
+		final BigDecimal totalMoney = Money.MoneySupply.getTotalMoney();
 		final double buyerWorth = buyer.getWorth();
 		final double sellerWorth = seller.getWorth();
 		final int numSellerConsumables = seller.getNumConsumables();
@@ -29,7 +31,7 @@ public class TransactionTest {
 		
 		new Transaction(buyer, seller, agreement);
 		
-		final double totalMoneyAfterTrans = Money.MoneySupply.getTotalMoney();
+		final BigDecimal totalMoneyAfterTrans = Money.MoneySupply.getTotalMoney();
 		final double buyerPostWorth = buyer.getWorth();
 		final double sellerPostWorth = seller.getWorth();
 		
