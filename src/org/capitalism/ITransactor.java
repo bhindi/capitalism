@@ -13,7 +13,7 @@ public interface ITransactor {
 	TransactionAgreement proposeTransaction(ITransactor seller,
 			TransactionTerms transactionTerms);
 
-	boolean proposeTransaction(TransactionTerms transactionTerms);
+	boolean acceptTransaction(TransactionTerms transactionTerms);
 
 	ArrayList<Product> getItemsForSale();
 

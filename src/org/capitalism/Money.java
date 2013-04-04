@@ -2,7 +2,7 @@ package org.capitalism;
 
 public class Money {
 
-	static class MoneySupply {
+	public static class MoneySupply {
 
 		private static double totalMoney = 100000.0;
 
@@ -18,6 +18,11 @@ public class Money {
 
 		public static double getTotalMoney() {
 			return totalMoney;
+		}
+
+		public static void giveMoney(Money money) {
+			totalMoney += money.value;
+			money.value = 0;
 		}
 
 	}

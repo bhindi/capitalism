@@ -24,6 +24,11 @@ public class MoneyTest {
 		
 		Assert.assertEquals(totalMoney, bankBalance.getValue() + totalMoneyAfterWithdrawal);
 		
+		Money.MoneySupply.giveMoney(bankBalance);
+		double totalMoneyAfterDeposit = Money.MoneySupply.getTotalMoney();
+		Assert.assertEquals(totalMoney, totalMoneyAfterDeposit);
+		Assert.assertEquals(bankBalance.getValue(), 0.0);
+		
 	}
 	
 	@Test

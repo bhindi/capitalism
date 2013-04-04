@@ -15,8 +15,8 @@ public class TransactionTest {
 		seller.createConsumable();
 		
 		final double totalMoney = Money.MoneySupply.getTotalMoney();
-		final double buyerEquity = buyer.getWorth();
-		final double sellerEquity = seller.getWorth();
+		final double buyerWorth = buyer.getWorth();
+		final double sellerWorth = seller.getWorth();
 		final int numSellerConsumables = seller.getNumConsumables();
 		final int numBuyerConsumables = buyer.getNumConsumables();
 	
@@ -28,12 +28,12 @@ public class TransactionTest {
 		new Transaction(buyer, seller, agreement);
 		
 		final double totalMoneyAfterTrans = Money.MoneySupply.getTotalMoney();
-		final double buyerPostEquity = buyer.getWorth();
-		final double sellerPostEquity = seller.getWorth();
+		final double buyerPostWorth = buyer.getWorth();
+		final double sellerPostWorth = seller.getWorth();
 		
 		Assert.assertEquals(totalMoney, totalMoneyAfterTrans);
-		Assert.assertEquals(buyerEquity-5, buyerPostEquity);	
-		Assert.assertEquals(sellerEquity+5, sellerPostEquity);	
+		Assert.assertEquals(buyerWorth-5, buyerPostWorth);	
+		Assert.assertEquals(sellerWorth+5, sellerPostWorth);
 		Assert.assertEquals(numSellerConsumables-1, seller.getNumConsumables());
 		Assert.assertEquals(numBuyerConsumables+1, buyer.getNumConsumables());
 	}

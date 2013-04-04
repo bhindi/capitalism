@@ -7,6 +7,7 @@ public class Human implements ITransactor, IProducer {
 
 	Money worth = Money.MoneySupply.getMoney(50);
 	ArrayList<Product> products = new ArrayList<Product>();
+	double productEquity = 0;
 
 	@Override
 	public Money deduct(double transactionValue) {
@@ -23,54 +24,68 @@ public class Human implements ITransactor, IProducer {
 	public double getWorth() {
 		return worth.getValue();
 	}
-
+	
+	public double getEquity() {
+		
+		return worth.getValue() + productEquity;
+	}
+	
 	@Override
 	public void createConsumable() {
 
 		Money money = deduct(5);
-		products.add(new Product(money));
+		Product p = new Product(money);
+		products.add(p);
+		productEquity += p.getValue();
 
 	}
 
-	public void live(ArrayList<Human> humans) {
+	public void live(ArrayList<Human> nearbyHumans) {
 
 		// the sole purpose of a human is to maximize their worth
 		produce();
-		consume(chooseSeller(humans));
+		consume(chooseSeller(nearbyHumans));
 
 	}
 
 	private ITransactor chooseSeller(ArrayList<Human> humans) {
 
+		if(humans.size() == 1) {
+			return null;
+		}
+		
 		int transactorIndex = new Random().nextInt(humans.size());
-		return humans.get(transactorIndex);
+		Human human = humans.get(transactorIndex);
+		if(human == this) {
+			transactorIndex++;
+			transactorIndex%= humans.size();
+			human = humans.get(transactorIndex);
+		}
+		
+		return human;
 	}
 	
 //TODO: This code is hard to follow
 	private void consume(ITransactor seller) {
 
-		final int numItems = seller.getItemsForSale().size();
+		final int numItemsForSale = seller.getItemsForSale().size();
 
-		if (numItems > 0) {
+		if (numItemsForSale > 0) {
 
 			//pick item to purchase
 			IConsumable itemToPurchase = seller.getItemsForSale().get(
-					new Random().nextInt(numItems));
+					new Random().nextInt(numItemsForSale));
 
 			TransactionTerms terms = new TransactionTerms(5.0,
 					itemToPurchase.getId());
 			
 			TransactionAgreement agreement = proposeTransaction(seller, terms);
-
-			if (agreement.transactionApproved) {
-				
-				new Transaction(this, seller, agreement);
-			}
+			new Transaction(this, seller, agreement);
 		}
 	}
 
-	private void produce() {
 
+	private void produce() {
 		if (new Random().nextBoolean()) {
 			createConsumable();
 		}
@@ -84,7 +99,7 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public boolean proposeTransaction(TransactionTerms transactionTerms) {
+	public boolean acceptTransaction(TransactionTerms transactionTerms) {
 
 		// evaluate transaction terms
 		// for now just say yes to everything
@@ -102,6 +117,7 @@ public class Human implements ITransactor, IProducer {
 	public IConsumable get(int consumableId) {
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == consumableId) {
+				productEquity -= products.get(i).getValue();
 				return products.remove(i);
 			}
 		}
@@ -113,6 +129,7 @@ public class Human implements ITransactor, IProducer {
 
 		if (consumable != null) {
 			products.add((Product) consumable);
+			productEquity += consumable.getValue();
 		}
 
 	}

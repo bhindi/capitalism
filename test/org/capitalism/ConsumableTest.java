@@ -7,7 +7,7 @@ import org.junit.Test;
 public class ConsumableTest {
 
 	@Test
-	public void testMoneySupplyDoesNotDecrease() {
+	public void testWorthDecreases() {
 
 		Human man = new Human();
 		double worth = man.getWorth();
@@ -18,10 +18,10 @@ public class ConsumableTest {
 
 	private void testConsumableCreation(IProducer producer) {
 
-		final double totalMoney = Money.MoneySupply.getTotalMoney();
+		final double moneySupplyBeforeConsumableCreation = Money.MoneySupply.getTotalMoney();
 
 		producer.createConsumable();
 		
-		Assert.assertEquals(totalMoney, Money.MoneySupply.getTotalMoney());
+		Assert.assertTrue(moneySupplyBeforeConsumableCreation < Money.MoneySupply.getTotalMoney());
 	}
 }

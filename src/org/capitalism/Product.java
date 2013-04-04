@@ -7,10 +7,18 @@ public class Product implements IConsumable {
 	public Product(Money money) {
 
 		value = money.getValue();
+		Money.MoneySupply.giveMoney(money);
 	}
 
 	@Override
 	public int getId() {
 		return this.hashCode();
 	}
+
+	@Override
+	public double getValue() {
+		return value;
+	}
+	
+	
 }

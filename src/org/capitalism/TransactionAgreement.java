@@ -8,7 +8,7 @@ public class TransactionAgreement {
 	public TransactionAgreement(ITransactor proposer, ITransactor proposee,
 			TransactionTerms transactionTerms) {
 
-		transactionApproved = proposee.proposeTransaction(transactionTerms);
+		transactionApproved = proposee.acceptTransaction(transactionTerms);
 		terms = transactionTerms;
 		
 	}

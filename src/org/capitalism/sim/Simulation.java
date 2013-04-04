@@ -19,7 +19,7 @@ public class Simulation {
 	
 	ArrayList<Human> humans;
 	
-	private Simulation() {
+	public Simulation() {
 		humans = new ArrayList<Human>();
 		
 		for(int i=0; i<NUM_HUMANS; i++) {
