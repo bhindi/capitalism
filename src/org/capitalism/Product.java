@@ -9,7 +9,7 @@ public class Product implements IConsumable {
 	
 	public Product(Money money) {
 
-		value = money.getValue().doubleValue();
+		value = money.getValue();
 		priceMultiplier = new Random().nextDouble() + 1;
 		Money.MoneySupply.giveMoney(money);
 	}

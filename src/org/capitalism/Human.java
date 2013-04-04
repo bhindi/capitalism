@@ -1,23 +1,22 @@
 package org.capitalism;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Human implements ITransactor, IProducer {
 
 	private final double minProfit = new Random().nextDouble() + 1;
-	Money worth = Money.MoneySupply.getMoney(new BigDecimal(50));
+	Money worth = Money.MoneySupply.getMoney(50);
 	ArrayList<Product> products = new ArrayList<Product>();
 	double productEquity = 0;
-	private final double productValue = new Random().nextDouble()*worth.getValue().doubleValue();
+	private final double productValue = new Random().nextDouble()*worth.getValue();
 	private final double minOfferPercentage = new Random().nextDouble() + 1;
 	private final double maxOfferPercentage = minOfferPercentage + .15;
 
 	@Override
 	public Money deduct(double transactionValue) {
 
-		return worth.split(new BigDecimal(transactionValue));
+		return worth.split(transactionValue);
 	}
 
 	@Override
@@ -27,12 +26,12 @@ public class Human implements ITransactor, IProducer {
 
 	@Override
 	public double getWorth() {
-		return worth.getValue().doubleValue();
+		return worth.getValue();
 	}
 	
 	public double getEquity() {
 		
-		return worth.getValue().doubleValue() + productEquity;
+		return worth.getValue() + productEquity;
 	}
 	
 	@Override

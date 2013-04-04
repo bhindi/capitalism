@@ -1,62 +1,59 @@
 package org.capitalism;
 
-import java.math.BigDecimal;
-
 public class Money {
 
 	public static class MoneySupply {
 
-		private static BigDecimal totalMoney = new BigDecimal(100000.0);
+		private static double totalMoney = 100000.0;
 
-		public static Money getMoney(BigDecimal amount) {
+		public static Money getMoney(double amount) {
 
-			Money money = new Money(new BigDecimal(0.0));
-			if (totalMoney.compareTo(amount) > 0) {
-				totalMoney = totalMoney.subtract(amount);
+			Money money = new Money(0.0);
+			if (totalMoney >= amount) {
+				totalMoney -= amount;
 				money = new Money(amount);
 			}
 			return money;
 		}
 
-		public static BigDecimal getTotalMoney() {
+		public static double getTotalMoney() {
 			return totalMoney;
 		}
 
 		public static void giveMoney(Money money) {
-			totalMoney = totalMoney.add(money.value);
-			money.value = new BigDecimal(0);
+			totalMoney += money.value;
+			money.value = 0;
 		}
 
 	}
 
-	BigDecimal value;
+	double value;
 
-	private Money(BigDecimal amount) {
+	private Money(double amount) {
 		value = amount;
-		value.setScale(1, BigDecimal.ROUND_HALF_EVEN);
 	}
 
-	public BigDecimal getValue() {
+	public double getValue() {
 
 		return value;
 	}
 
-	public Money split(BigDecimal amount) {
+	public Money split(double amount) {
 		
-		if (value.compareTo(amount) > 0) {
+		if (value >= amount) {
 			
-			BigDecimal delta = value.subtract(amount);
+			double delta = value - amount;
 			
 			value = delta;
 			return new Money(amount);
 		}
-		return new Money( new BigDecimal(0));
+		return new Money(0.0);
 	}
 
 	public void add(Money deposit) {
 
-		value = value.add(deposit.getValue());
-		deposit.value = new BigDecimal(0.0);
+		value += deposit.getValue();
+		deposit.value = 0.0;
 		
 	}
 
