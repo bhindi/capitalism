@@ -42,6 +42,8 @@ public class SimulationTest {
 		}
 		newTotalEquity += Money.MoneySupply.getTotalMoney();
 
+		System.out.println("newTotalEquity " + Double.toString(newTotalEquity)); 
+		System.out.println("totalEquity " + Double.toString(totalEquity)); 
 		Assert.assertTrue(Double.compare(newTotalEquity, totalEquity) == 0);
 
 	}

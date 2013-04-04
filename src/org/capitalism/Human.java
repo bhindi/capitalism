@@ -5,9 +5,13 @@ import java.util.Random;
 
 public class Human implements ITransactor, IProducer {
 
+	private final double minProfit = new Random().nextDouble() + 1;
 	Money worth = Money.MoneySupply.getMoney(50);
 	ArrayList<Product> products = new ArrayList<Product>();
 	double productEquity = 0;
+	private final double productValue = new Random().nextDouble()*worth.getValue();
+	private final double minOfferPercentage = new Random().nextDouble() + 1;
+	private final double maxOfferPercentage = minOfferPercentage + .15;
 
 	@Override
 	public Money deduct(double transactionValue) {
@@ -33,7 +37,7 @@ public class Human implements ITransactor, IProducer {
 	@Override
 	public void createConsumable() {
 
-		Money money = deduct(5);
+		Money money = deduct(productValue);
 		Product p = new Product(money);
 		products.add(p);
 		productEquity += p.getValue();
@@ -76,7 +80,9 @@ public class Human implements ITransactor, IProducer {
 			IConsumable itemToPurchase = seller.getItemsForSale().get(
 					new Random().nextInt(numItemsForSale));
 
-			TransactionTerms terms = new TransactionTerms(5.0,
+			double offerPrice = calculateTransactionOfferPrice(itemToPurchase);
+			
+			TransactionTerms terms = new TransactionTerms(offerPrice,
 					itemToPurchase.getId());
 			
 			TransactionAgreement agreement = proposeTransaction(seller, terms);
@@ -84,6 +90,13 @@ public class Human implements ITransactor, IProducer {
 		}
 	}
 
+
+	private double calculateTransactionOfferPrice(IConsumable itemToPurchase) {
+
+		double itemPrice = itemToPurchase.getPrice();
+		double offerPrice = itemPrice*(new Random().nextDouble()*(maxOfferPercentage - minOfferPercentage) + minOfferPercentage);
+		return offerPrice;
+	}
 
 	private void produce() {
 		if (new Random().nextBoolean()) {
@@ -99,11 +112,16 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public boolean acceptTransaction(TransactionTerms transactionTerms) {
+	public boolean acceptTransaction(TransactionTerms terms) {
 
-		// evaluate transaction terms
-		// for now just say yes to everything
-		return true;
+		IConsumable consumable = get(terms.consumableId);
+		if(consumable != null) {
+			final double consumableValue = consumable.getValue();
+			if(terms.transactionValue >= consumableValue*minProfit ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -114,7 +132,7 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public IConsumable get(int consumableId) {
+	public IConsumable remove(int consumableId) {
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == consumableId) {
 				productEquity -= products.get(i).getValue();
@@ -123,6 +141,15 @@ public class Human implements ITransactor, IProducer {
 		}
 		return null;
 	}
+	
+	public IConsumable get(int consumableId) {
+		for (int i = 0; i < products.size(); i++) {
+			if (products.get(i).getId() == consumableId) {
+				return products.get(i);
+			}
+		}
+		return null;
+	}	
 
 	@Override
 	public void give(IConsumable consumable) {

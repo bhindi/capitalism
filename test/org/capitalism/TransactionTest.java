@@ -20,9 +20,11 @@ public class TransactionTest {
 		final int numSellerConsumables = seller.getNumConsumables();
 		final int numBuyerConsumables = buyer.getNumConsumables();
 	
-		int consumableId = seller.getItemsForSale().get(0).getId();
+		IConsumable product = seller.getItemsForSale().get(0);
+		final int consumableId = product.getId();
+		final double price = product.getPrice();
 		
-		TransactionTerms transactionTerms = new TransactionTerms(5.0, consumableId);
+		TransactionTerms transactionTerms = new TransactionTerms(price*2, consumableId);
 		TransactionAgreement agreement = buyer.proposeTransaction(seller, transactionTerms);
 		
 		new Transaction(buyer, seller, agreement);
@@ -32,8 +34,8 @@ public class TransactionTest {
 		final double sellerPostWorth = seller.getWorth();
 		
 		Assert.assertEquals(totalMoney, totalMoneyAfterTrans);
-		Assert.assertEquals(buyerWorth-5, buyerPostWorth);	
-		Assert.assertEquals(sellerWorth+5, sellerPostWorth);
+		Assert.assertEquals(buyerWorth-price*2, buyerPostWorth);	
+		Assert.assertEquals(sellerWorth+price*2, sellerPostWorth);
 		Assert.assertEquals(numSellerConsumables-1, seller.getNumConsumables());
 		Assert.assertEquals(numBuyerConsumables+1, buyer.getNumConsumables());
 	}
@@ -64,5 +66,25 @@ public class TransactionTest {
 		Assert.assertEquals(numSellerConsumables, seller.getNumConsumables());
 		Assert.assertEquals(numBuyerConsumables, buyer.getNumConsumables());
 	}
+	
+	@Test
+	public void testUnderbid() {
+
+		Human buyer = new Human();	
+		Human seller = new Human();		
+		
+		seller.createConsumable();
+		
+		IConsumable product = seller.getItemsForSale().get(0);
+		final int consumableId = product.getId();
+		final double price = product.getPrice();
+		
+		TransactionTerms transactionTerms = new TransactionTerms(price*.1, consumableId);
+		TransactionAgreement agreement = buyer.proposeTransaction(seller, transactionTerms);
+		
+		Transaction trans = new Transaction(buyer, seller, agreement);
+		
+		Assert.assertTrue(!trans.getProcessed());
+	}	
 	
 }

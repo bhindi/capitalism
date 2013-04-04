@@ -6,5 +6,7 @@ public interface IConsumable {
 	
 	double getValue();
 
+	double getPrice();
+
 
 }

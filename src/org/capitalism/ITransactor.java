@@ -17,7 +17,7 @@ public interface ITransactor {
 
 	ArrayList<Product> getItemsForSale();
 
-	IConsumable get(int consumableId);
+	IConsumable remove(int consumableId);
 
 	void give(IConsumable iConsumable);
 
