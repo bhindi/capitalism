@@ -9,7 +9,7 @@ public class Human implements ITransactor, IProducer {
 	Money worth = Money.MoneySupply.getMoney(50);
 	ArrayList<Product> products = new ArrayList<Product>();
 	double productEquity = 0;
-	private final double productValue = new Random().nextDouble()*worth.getValue();
+	private final double productValue = new Random().nextDouble()*worth.getValue()*.1;
 	private final double minOfferPercentage = new Random().nextDouble() + 1;
 	private final double maxOfferPercentage = minOfferPercentage + .15;
 

@@ -1,5 +1,7 @@
 package org.capitalism;
 
+import java.io.Console;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -27,8 +29,8 @@ public class TransactionTest {
 		TransactionTerms transactionTerms = new TransactionTerms(price*2, consumableId);
 		TransactionAgreement agreement = buyer.proposeTransaction(seller, transactionTerms);
 		
-		new Transaction(buyer, seller, agreement);
-		
+		new Transaction(buyer, seller, agreement);		
+
 		final double totalMoneyAfterTrans = Money.MoneySupply.getTotalMoney();
 		final double buyerPostWorth = buyer.getWorth();
 		final double sellerPostWorth = seller.getWorth();
@@ -38,6 +40,7 @@ public class TransactionTest {
 		Assert.assertEquals(sellerWorth+price*2, sellerPostWorth);
 		Assert.assertEquals(numSellerConsumables-1, seller.getNumConsumables());
 		Assert.assertEquals(numBuyerConsumables+1, buyer.getNumConsumables());
+		
 	}
 	
 	@Test
