@@ -1,7 +1,5 @@
 package org.capitalism;
 
-import java.io.Console;
-
 import junit.framework.Assert;
 
 import org.junit.Test;
