@@ -3,7 +3,10 @@ package org.capitalism.sim;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.capitalism.FiscalProfile;
 import org.capitalism.Human;
+import org.capitalism.IConsumer.SpenderType;
+import org.capitalism.IProducer.ProfitType;
 import org.capitalism.Money;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,9 +16,12 @@ public class SimulationTest {
 	@Test
 	public void test() {
 
-		Human man1 = new Human();
-		Human man2 = new Human();
-		Human man3 = new Human();
+		Human man1 = new Human(new FiscalProfile(ProfitType.HIGH_PROFIT,
+				SpenderType.HIGH_SPENDER));
+		Human man2 = new Human(new FiscalProfile(ProfitType.NEUTRAL_PROFIT,
+				SpenderType.NEUTRAL_SPENDER));
+		Human man3 = new Human(new FiscalProfile(ProfitType.LOW_PROFIT,
+				SpenderType.LOW_SPENDER));
 
 		ArrayList<Human> humans = new ArrayList<Human>();
 		humans.add(man1);
@@ -42,18 +48,18 @@ public class SimulationTest {
 		}
 		newTotalEquity += Money.MoneySupply.getTotalMoney();
 
-		System.out.println("newTotalEquity " + Double.toString(newTotalEquity)); 
-		System.out.println("totalEquity " + Double.toString(totalEquity)); 
+		System.out.println("newTotalEquity " + Double.toString(newTotalEquity));
+		System.out.println("totalEquity " + Double.toString(totalEquity));
 		Assert.assertTrue(Double.compare(newTotalEquity, totalEquity) == 0);
 
 	}
-	
+
 	@Test
 	public void testSim() {
 		Simulation sim = new Simulation();
 
 		Assert.assertNotNull(sim);
-		
+
 	}
 
 }
