@@ -8,24 +8,24 @@ public class Money {
 
 		private static BigDecimal totalMoney = new BigDecimal(100000.0);
 
-		public static Money getMoney(double amount) {
+		public static Money getMoney(BigDecimal amount) {
 
 			totalMoney.setScale(1, BigDecimal.ROUND_HALF_UP);
 			
 			Money money = new Money(0.0);
-			if (totalMoney.doubleValue() >= amount) {
-				totalMoney = totalMoney.subtract(new BigDecimal(amount));
+			if (totalMoney.compareTo(amount) > 0) {
+				totalMoney = totalMoney.subtract(amount);
 				money = new Money(amount);
 			}
 			return money;
 		}
 
-		public static double getTotalMoney() {
-			return totalMoney.doubleValue();
+		public static BigDecimal getTotalMoney() {
+			return totalMoney;
 		}
 
 		public static void giveMoney(Money money) {
-			totalMoney = totalMoney.add(new BigDecimal(money.getValue()));
+			totalMoney = totalMoney.add(money.getValue());
 			money.value = new BigDecimal(0.0);
 		}
 
@@ -41,9 +41,9 @@ public class Money {
 		value = amount;
 	}	
 
-	public double getValue() {
+	public BigDecimal getValue() {
 
-		return value.doubleValue();
+		return value;
 	}
 
 	public Money split(BigDecimal amount) {
@@ -58,7 +58,7 @@ public class Money {
 
 	public void add(Money deposit) {
 
-		value = value.add(new BigDecimal(deposit.getValue()));
+		value = value.add(deposit.getValue());
 		deposit.value = new BigDecimal(0.0);
 		
 	}

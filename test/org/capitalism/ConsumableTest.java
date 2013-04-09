@@ -1,5 +1,7 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -10,18 +12,20 @@ public class ConsumableTest {
 	public void testWorthDecreases() {
 
 		Human man = new Human();
-		double worth = man.getWorth();
+		BigDecimal worth = man.getWorth();
 		testConsumableCreation(man);
-		Assert.assertTrue(man.getWorth() < worth);
+		Assert.assertTrue(man.getWorth().compareTo(worth) < 0);
 
 	}
 
 	private void testConsumableCreation(IProducer producer) {
 
-		final double moneySupplyBeforeConsumableCreation = Money.MoneySupply.getTotalMoney();
+		final BigDecimal moneySupplyBeforeConsumableCreation = Money.MoneySupply.getTotalMoney();
 
 		producer.createConsumable();
 		
-		Assert.assertTrue(moneySupplyBeforeConsumableCreation < Money.MoneySupply.getTotalMoney());
+		Assert.assertNotNull(moneySupplyBeforeConsumableCreation);
+		Assert.assertNotNull(Money.MoneySupply.getTotalMoney());
+		Assert.assertTrue(moneySupplyBeforeConsumableCreation.compareTo(Money.MoneySupply.getTotalMoney()) < 0 );
 	}
 }

@@ -9,7 +9,7 @@ public interface ITransactor {
 
 	void increment(Money deduction);
 
-	double getWorth();
+	BigDecimal getWorth();
 
 	TransactionAgreement proposeTransaction(ITransactor seller,
 			TransactionTerms transactionTerms);

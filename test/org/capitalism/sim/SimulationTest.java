@@ -1,5 +1,7 @@
 package org.capitalism.sim;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -28,12 +30,12 @@ public class SimulationTest {
 		humans.add(man2);
 		humans.add(man3);
 
-		double totalEquity = 0;
+		BigDecimal totalEquity = new BigDecimal(0);
 		Iterator<Human> itr = humans.iterator();
 		while (itr.hasNext()) {
-			totalEquity += itr.next().getWorth();
+			totalEquity = totalEquity.add(itr.next().getWorth());
 		}
-		totalEquity += Money.MoneySupply.getTotalMoney();
+		totalEquity = totalEquity.add(Money.MoneySupply.getTotalMoney());
 
 		for (int i = 0; i < 10; i++) {
 			man1.live(humans);
@@ -41,16 +43,16 @@ public class SimulationTest {
 			man3.live(humans);
 		}
 
-		double newTotalEquity = 0;
+		BigDecimal newTotalEquity = new BigDecimal(0);
 		Iterator<Human> itr2 = humans.iterator();
 		while (itr2.hasNext()) {
-			newTotalEquity += itr2.next().getWorth();
+			newTotalEquity = newTotalEquity.add(itr2.next().getWorth());
 		}
-		newTotalEquity += Money.MoneySupply.getTotalMoney();
+		newTotalEquity = newTotalEquity.add(Money.MoneySupply.getTotalMoney());
 
-		System.out.println("newTotalEquity " + Double.toString(newTotalEquity));
-		System.out.println("totalEquity " + Double.toString(totalEquity));
-		Assert.assertTrue(Double.compare(newTotalEquity, totalEquity) == 0);
+		System.out.println("newTotalEquity " + NumberFormat.getCurrencyInstance().format(newTotalEquity));
+		System.out.println("totalEquity " + NumberFormat.getCurrencyInstance().format(totalEquity));
+		Assert.assertTrue(newTotalEquity.compareTo(totalEquity) == 0);
 
 	}
 

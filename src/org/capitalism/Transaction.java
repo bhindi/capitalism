@@ -13,9 +13,9 @@ public class Transaction {
 		
 		if(agreement.transactionApproved) {
 			
-			Money deduction = buyer.deduct(new BigDecimal(agreement.terms.transactionValue));
+			Money deduction = buyer.deduct(agreement.terms.transactionValue);
 			
-			if(deduction.getValue() > 0) {
+			if(deduction.getValue().compareTo(new BigDecimal(0)) >0) {
 				seller.increment(deduction);
 				buyer.give(seller.remove(agreement.terms.consumableId));
 				transactionProcessed = true;
