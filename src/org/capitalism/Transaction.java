@@ -1,5 +1,7 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
+
 public class Transaction {
 
 	private boolean transactionProcessed;
@@ -11,7 +13,7 @@ public class Transaction {
 		
 		if(agreement.transactionApproved) {
 			
-			Money deduction = buyer.deduct(agreement.terms.transactionValue);
+			Money deduction = buyer.deduct(new BigDecimal(agreement.terms.transactionValue));
 			
 			if(deduction.getValue() > 0) {
 				seller.increment(deduction);

@@ -36,20 +36,24 @@ public class Money {
 	private Money(double amount) {
 		value = new BigDecimal(amount);
 	}
+	
+	private Money(BigDecimal amount) {
+		value = amount;
+	}	
 
 	public double getValue() {
 
 		return value.doubleValue();
 	}
 
-	public Money split(double amount) {
+	public Money split(BigDecimal amount) {
 		
-		if (value.doubleValue() >= amount) {
+		if (value.compareTo(amount) > 0) {
 			
-			value = value.subtract(new BigDecimal(amount));
+			value = value.subtract(amount);
 			return new Money(amount);
 		}
-		return new Money(0.0);
+		return new Money(new BigDecimal(0.0));
 	}
 
 	public void add(Money deposit) {

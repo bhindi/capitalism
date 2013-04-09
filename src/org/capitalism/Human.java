@@ -1,5 +1,6 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,7 +25,7 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public Money deduct(double transactionValue) {
+	public Money deduct(BigDecimal transactionValue) {
 
 		return worth.split(transactionValue);
 	}
@@ -47,7 +48,7 @@ public class Human implements ITransactor, IProducer {
 	@Override
 	public void createConsumable() {
 
-		Money money = deduct(productValue);
+		Money money = deduct(new BigDecimal(productValue));
 		Product p = new Product(money);
 		products.add(p);
 		productEquity += p.getValue();

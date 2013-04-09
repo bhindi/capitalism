@@ -1,10 +1,11 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public interface ITransactor {
 
-	Money deduct(double transactionValue);
+	Money deduct(BigDecimal transactionValue);
 
 	void increment(Money deduction);
 

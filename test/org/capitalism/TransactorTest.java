@@ -1,5 +1,7 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -10,7 +12,7 @@ public class TransactorTest {
 	public void testDeduct() {
 		ITransactor man = new Human();
 		double worth = man.getWorth();
-		man.deduct(4);
+		man.deduct(new BigDecimal(4));
 		
 		Assert.assertEquals( worth - 4, man.getWorth());
 	}

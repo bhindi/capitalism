@@ -1,5 +1,7 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -46,7 +48,7 @@ public class MoneyTest {
 	public void testSplitMoney() {
 	
 		Money bankBalance = Money.MoneySupply.getMoney(3);
-		Money withdrawal = bankBalance.split(1.0);
+		Money withdrawal = bankBalance.split(new BigDecimal(1.0));
 		
 		Assert.assertEquals(1.0, withdrawal.getValue());
 		Assert.assertEquals(2.0, bankBalance.getValue());
@@ -57,7 +59,7 @@ public class MoneyTest {
 	public void testSplitInsufficientMoney() {
 	
 		Money bankBalance = Money.MoneySupply.getMoney(3);
-		Money withdrawal = bankBalance.split(6.0);
+		Money withdrawal = bankBalance.split(new BigDecimal(6.0));
 		
 		Assert.assertEquals(0.0, withdrawal.getValue());
 		Assert.assertEquals(3.0, bankBalance.getValue());
