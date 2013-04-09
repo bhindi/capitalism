@@ -1,11 +1,14 @@
 package org.capitalism.sim;
 
+import java.io.Console;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.capitalism.FiscalProfile;
 import org.capitalism.Human;
 import org.capitalism.IConsumer.SpenderType;
 import org.capitalism.IProducer.ProfitType;
+import org.capitalism.Money;
 
 public class Simulation {
 
@@ -43,6 +46,9 @@ public class Simulation {
 
 	private void run() {
 
+		BigDecimal totalMoney = Money.MoneySupply.getTotalMoney();
+		System.out.println(totalMoney.toString());
+		
 		while (true) {
 
 			for (int i = 0; i < NUM_HUMANS; i++) {

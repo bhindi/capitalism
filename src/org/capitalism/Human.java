@@ -12,6 +12,8 @@ public class Human implements ITransactor, IProducer {
 	private final BigDecimal productValue = new BigDecimal(
 			new Random().nextDouble() * .1).multiply(worth.getValue());
 	private final FiscalProfile fiscalProfile;
+	int numItemsSold = 0;
+	int numItemsPurchased = 0;
 
 	public Human(FiscalProfile fiscalProfile) {
 
@@ -148,6 +150,7 @@ public class Human implements ITransactor, IProducer {
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == consumableId) {
 				productEquity = productEquity.subtract(products.get(i).getValue());
+				numItemsSold++;
 				return products.remove(i);
 			}
 		}
@@ -168,6 +171,7 @@ public class Human implements ITransactor, IProducer {
 
 		if (consumable != null) {
 			products.add((Product) consumable);
+			numItemsPurchased++;
 			productEquity = productEquity.add(consumable.getValue());
 		}
 
