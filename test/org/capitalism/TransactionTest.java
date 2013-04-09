@@ -24,9 +24,9 @@ public class TransactionTest {
 	
 		IConsumable product = seller.getItemsForSale().get(0);
 		final int consumableId = product.getId();
-		final double price = product.getPrice();
+		final BigDecimal price = product.getPrice();
 		
-		TransactionTerms transactionTerms = new TransactionTerms(new BigDecimal(price*2), consumableId);
+		TransactionTerms transactionTerms = new TransactionTerms(price.multiply(new BigDecimal(2)), consumableId);
 		TransactionAgreement agreement = buyer.proposeTransaction(seller, transactionTerms);
 		
 		new Transaction(buyer, seller, agreement);		
@@ -36,8 +36,8 @@ public class TransactionTest {
 		final BigDecimal sellerPostWorth = seller.getWorth();
 		
 		Assert.assertEquals(totalMoney, totalMoneyAfterTrans);
-		Assert.assertEquals(buyerWorth.subtract(new BigDecimal(price*2)), buyerPostWorth);	
-		Assert.assertEquals(sellerWorth.add(new BigDecimal(price*2)), sellerPostWorth);
+		Assert.assertEquals(buyerWorth.subtract(price.multiply(new BigDecimal(2))), buyerPostWorth);	
+		Assert.assertEquals(sellerWorth.add(price.multiply(new BigDecimal(2))), sellerPostWorth);
 		Assert.assertEquals(numSellerConsumables-1, seller.getNumConsumables());
 		Assert.assertEquals(numBuyerConsumables+1, buyer.getNumConsumables());
 		
@@ -80,9 +80,9 @@ public class TransactionTest {
 		
 		IConsumable product = seller.getItemsForSale().get(0);
 		final int consumableId = product.getId();
-		final double price = product.getPrice();
+		final BigDecimal price = product.getPrice();
 		
-		TransactionTerms transactionTerms = new TransactionTerms(new BigDecimal(price*.1), consumableId);
+		TransactionTerms transactionTerms = new TransactionTerms(price.multiply(new BigDecimal(.1)), consumableId);
 		TransactionAgreement agreement = buyer.proposeTransaction(seller, transactionTerms);
 		
 		Transaction trans = new Transaction(buyer, seller, agreement);

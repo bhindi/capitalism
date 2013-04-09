@@ -51,7 +51,7 @@ public class Human implements ITransactor, IProducer {
 		Money money = deduct(productValue);
 		Product p = new Product(money);
 		products.add(p);
-		productEquity = productEquity.add(new BigDecimal(p.getValue()));
+		productEquity = productEquity.add(p.getValue());
 
 	}
 
@@ -91,9 +91,9 @@ public class Human implements ITransactor, IProducer {
 			IConsumable itemToPurchase = seller.getItemsForSale().get(
 					new Random().nextInt(numItemsForSale));
 
-			double offerPrice = calculateTransactionOfferPrice(itemToPurchase);
+			BigDecimal offerPrice = calculateTransactionOfferPrice(itemToPurchase);
 
-			TransactionTerms terms = new TransactionTerms(new BigDecimal(offerPrice),
+			TransactionTerms terms = new TransactionTerms(offerPrice,
 					itemToPurchase.getId());
 
 			TransactionAgreement agreement = proposeTransaction(seller, terms);
@@ -101,12 +101,11 @@ public class Human implements ITransactor, IProducer {
 		}
 	}
 
-	private double calculateTransactionOfferPrice(IConsumable itemToPurchase) {
+	private BigDecimal calculateTransactionOfferPrice(IConsumable itemToPurchase) {
 
-		double itemPrice = itemToPurchase.getPrice();
-		double offerPrice = itemPrice
-				* (new Random().nextDouble()
-						* (fiscalProfile.maxPurchaseOfferPercentage - fiscalProfile.minPurchaseOfferPercentage) + fiscalProfile.minPurchaseOfferPercentage);
+		BigDecimal itemPrice = itemToPurchase.getPrice();
+		BigDecimal offerPrice = itemPrice.multiply(new BigDecimal(new Random().nextDouble())).multiply( new BigDecimal(
+						(fiscalProfile.maxPurchaseOfferPercentage - fiscalProfile.minPurchaseOfferPercentage) + fiscalProfile.minPurchaseOfferPercentage));
 		return offerPrice;
 	}
 
@@ -128,9 +127,9 @@ public class Human implements ITransactor, IProducer {
 
 		IConsumable consumable = get(terms.consumableId);
 		if (consumable != null) {
-			final double consumableValue = consumable.getValue();
-			if (terms.transactionValue.compareTo(new BigDecimal(consumableValue
-					* fiscalProfile.minProfit)) >= 0) {
+			final BigDecimal consumableValue = consumable.getValue();
+			if (terms.transactionValue.compareTo(consumableValue.multiply(new BigDecimal(
+					fiscalProfile.minProfit))) >= 0) {
 				return true;
 			}
 		}
@@ -148,7 +147,7 @@ public class Human implements ITransactor, IProducer {
 	public IConsumable remove(int consumableId) {
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == consumableId) {
-				productEquity = productEquity.subtract(new BigDecimal(products.get(i).getValue()));
+				productEquity = productEquity.subtract(products.get(i).getValue());
 				return products.remove(i);
 			}
 		}
@@ -169,7 +168,7 @@ public class Human implements ITransactor, IProducer {
 
 		if (consumable != null) {
 			products.add((Product) consumable);
-			productEquity = productEquity.add(new BigDecimal(consumable.getValue()));
+			productEquity = productEquity.add(consumable.getValue());
 		}
 
 	}

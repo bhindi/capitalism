@@ -1,12 +1,14 @@
 package org.capitalism;
 
+import java.math.BigDecimal;
+
 public interface IConsumable {
 
 	int getId();
 	
-	double getValue();
+	BigDecimal getValue();
 
-	double getPrice();
+	BigDecimal getPrice();
 
 
 }
