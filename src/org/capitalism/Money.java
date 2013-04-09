@@ -12,7 +12,7 @@ public class Money {
 
 			totalMoney.setScale(1, BigDecimal.ROUND_HALF_UP);
 			
-			Money money = new Money(0.0);
+			Money money = new Money(new BigDecimal(0.0));
 			if (totalMoney.compareTo(amount) > 0) {
 				totalMoney = totalMoney.subtract(amount);
 				money = new Money(amount);
@@ -32,10 +32,6 @@ public class Money {
 	}
 
 	BigDecimal value;
-
-	private Money(double amount) {
-		value = new BigDecimal(amount);
-	}
 	
 	private Money(BigDecimal amount) {
 		value = amount;
