@@ -12,9 +12,9 @@ public class ConsumableTest {
 	public void testWorthDecreases() {
 
 		Human man = new Human();
-		BigDecimal worth = man.getWorth();
+		BigDecimal worth = man.getMonetaryWorth();
 		testConsumableCreation(man);
-		Assert.assertTrue(man.getWorth().compareTo(worth) < 0);
+		Assert.assertTrue(man.getMonetaryWorth().compareTo(worth) < 0);
 
 	}
 

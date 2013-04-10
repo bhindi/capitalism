@@ -17,8 +17,8 @@ public class TransactionTest {
 		seller.createConsumable();
 
 		final BigDecimal totalMoney = Money.MoneySupply.getTotalMoney();
-		final BigDecimal buyerWorth = buyer.getWorth();
-		final BigDecimal sellerWorth = seller.getWorth();
+		final BigDecimal buyerWorth = buyer.getMonetaryWorth();
+		final BigDecimal sellerWorth = seller.getMonetaryWorth();
 		final int numSellerConsumables = seller.getNumConsumables();
 		final int numBuyerConsumables = buyer.getNumConsumables();
 
@@ -35,8 +35,8 @@ public class TransactionTest {
 
 		final BigDecimal totalMoneyAfterTrans = Money.MoneySupply
 				.getTotalMoney();
-		final BigDecimal buyerPostWorth = buyer.getWorth();
-		final BigDecimal sellerPostWorth = seller.getWorth();
+		final BigDecimal buyerPostWorth = buyer.getMonetaryWorth();
+		final BigDecimal sellerPostWorth = seller.getMonetaryWorth();
 
 		Assert.assertEquals(totalMoney, totalMoneyAfterTrans);
 		Assert.assertEquals(
@@ -58,7 +58,7 @@ public class TransactionTest {
 
 		seller.createConsumable();
 
-		final BigDecimal buyerWorthPreTransaction = buyer.getWorth();
+		final BigDecimal buyerWorthPreTransaction = buyer.getMonetaryWorth();
 		final BigDecimal transactionValue = buyerWorthPreTransaction
 				.add(new BigDecimal(5.0));
 		final int numSellerConsumables = seller.getNumConsumables();
@@ -73,7 +73,7 @@ public class TransactionTest {
 
 		new Transaction(buyer, seller, agreement);
 
-		Assert.assertEquals(buyerWorthPreTransaction, buyer.getWorth());
+		Assert.assertEquals(buyerWorthPreTransaction, buyer.getMonetaryWorth());
 		Assert.assertEquals(numSellerConsumables, seller.getNumConsumables());
 		Assert.assertEquals(numBuyerConsumables, buyer.getNumConsumables());
 	}

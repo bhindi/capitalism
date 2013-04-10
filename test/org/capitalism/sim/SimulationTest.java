@@ -33,7 +33,7 @@ public class SimulationTest {
 		BigDecimal totalEquity = new BigDecimal(0);
 		Iterator<Human> itr = humans.iterator();
 		while (itr.hasNext()) {
-			totalEquity = totalEquity.add(itr.next().getWorth());
+			totalEquity = totalEquity.add(itr.next().getMonetaryWorth());
 		}
 		totalEquity = totalEquity.add(Money.MoneySupply.getTotalMoney());
 
@@ -46,7 +46,7 @@ public class SimulationTest {
 		BigDecimal newTotalEquity = new BigDecimal(0);
 		Iterator<Human> itr2 = humans.iterator();
 		while (itr2.hasNext()) {
-			newTotalEquity = newTotalEquity.add(itr2.next().getWorth());
+			newTotalEquity = newTotalEquity.add(itr2.next().getMonetaryWorth());
 		}
 		newTotalEquity = newTotalEquity.add(Money.MoneySupply.getTotalMoney());
 

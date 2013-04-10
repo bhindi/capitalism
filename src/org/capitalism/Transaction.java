@@ -13,11 +13,11 @@ public class Transaction {
 		
 		if(agreement.transactionApproved) {
 			
-			Money deduction = buyer.deduct(agreement.terms.transactionValue);
+			Money deduction = buyer.deductTransactionPayment(agreement.terms.transactionValue);
 			
 			if(deduction.getValue().compareTo(new BigDecimal(0)) >0) {
-				seller.increment(deduction);
-				buyer.give(seller.remove(agreement.terms.consumableId));
+				seller.depositTransactionPayment(deduction);
+				buyer.takeConsumableFromTransaction(seller.provideConsumableForTransaction(agreement.terms.consumableId));
 				transactionProcessed = true;
 			}					
 		}	

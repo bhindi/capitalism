@@ -94,7 +94,7 @@ public class Human implements ITransactor, IProducer {
 
 	public void createConsumable() {
 
-		Money money = deduct(productValue);
+		Money money = deductMoney(productValue);
 		Product p = new Product(money);
 		products.add(p);
 		productEquity = productEquity.add(p.getValue());
@@ -102,12 +102,15 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public Money deduct(BigDecimal transactionValue) {
-
-		return worth.split(transactionValue);
+	public Money deductTransactionPayment(BigDecimal transactionValue) {
+		return deductMoney(transactionValue);
+	}
+	
+	private Money deductMoney(BigDecimal moneyToDeduct) {
+		return worth.split(moneyToDeduct);	
 	}
 
-	public IConsumable get(int consumableId) {
+	private IConsumable get(int consumableId) {
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == consumableId) {
 				return products.get(i);
@@ -129,12 +132,12 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public BigDecimal getWorth() {
+	public BigDecimal getMonetaryWorth() {
 		return worth.getValue();
 	}
 
 	@Override
-	public void give(IConsumable consumable) {
+	public void takeConsumableFromTransaction(IConsumable consumable) {
 
 		products.add((Product) consumable);
 		numItemsPurchased++;
@@ -143,7 +146,7 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public void increment(Money deduction) {
+	public void depositTransactionPayment(Money deduction) {
 		worth.add(deduction);
 	}
 
@@ -169,7 +172,7 @@ public class Human implements ITransactor, IProducer {
 	}
 
 	@Override
-	public IConsumable remove(int consumableId) {
+	public IConsumable provideConsumableForTransaction(int consumableId) {
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == consumableId) {
 				productEquity = productEquity.subtract(products.get(i)

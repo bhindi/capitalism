@@ -11,20 +11,20 @@ public class TransactorTest {
 	@Test
 	public void testDeduct() {
 		ITransactor man = new Human();
-		BigDecimal worth = man.getWorth();
-		man.deduct(new BigDecimal(4));
+		BigDecimal worth = man.getMonetaryWorth();
+		man.deductTransactionPayment(new BigDecimal(4));
 		
-		Assert.assertEquals( worth.subtract(new BigDecimal(4)), man.getWorth());
+		Assert.assertEquals( worth.subtract(new BigDecimal(4)), man.getMonetaryWorth());
 	}
 	
 	@Test
 	public void testIncrement() {
 		ITransactor man = new Human();
-		BigDecimal worth = man.getWorth();
+		BigDecimal worth = man.getMonetaryWorth();
 		Money add = Money.MoneySupply.getMoney(new BigDecimal (5));
-		man.increment(add);
+		man.depositTransactionPayment(add);
 		
-		Assert.assertEquals( worth.add(new BigDecimal(5)), man.getWorth());
+		Assert.assertEquals( worth.add(new BigDecimal(5)), man.getMonetaryWorth());
 	}
 
 }

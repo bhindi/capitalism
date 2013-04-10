@@ -5,21 +5,21 @@ import java.util.ArrayList;
 
 public interface ITransactor {
 
-	Money deduct(BigDecimal transactionValue);
+	ArrayList<Product> getItemsForSale();
 
-	void increment(Money deduction);
+	BigDecimal getMonetaryWorth();
 
-	BigDecimal getWorth();
+	void depositTransactionPayment(Money deduction);
+
+	Money deductTransactionPayment(BigDecimal transactionValue);
+
+	IConsumable provideConsumableForTransaction(int consumableId);
+
+	void takeConsumableFromTransaction(IConsumable iConsumable);
 
 	TransactionAgreement proposeTransaction(ITransactor seller,
 			TransactionTerms transactionTerms);
 
 	boolean acceptTransaction(TransactionTerms transactionTerms);
-
-	ArrayList<Product> getItemsForSale();
-
-	IConsumable remove(int consumableId);
-
-	void give(IConsumable iConsumable);
 
 }
