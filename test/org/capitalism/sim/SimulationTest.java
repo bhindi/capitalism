@@ -16,7 +16,7 @@ import org.junit.Test;
 public class SimulationTest {
 
 	@Test
-	public void test() {
+	public void testTotalEquityDoesNotChange() {
 
 		Human man1 = new Human(new FiscalProfile(ProfitType.HIGH_PROFIT,
 				SpenderType.HIGH_SPENDER));
@@ -63,5 +63,17 @@ public class SimulationTest {
 		Assert.assertNotNull(sim);
 
 	}
+	
+	@Test
+	public void testSimWithNoHumans() {
+
+			Human man = new Human();
+			ArrayList<Human> humans = new ArrayList<Human>();
+			man.live(humans);
+			
+			humans.add(man);
+			man.live(humans);
+
+	}	
 
 }

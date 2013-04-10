@@ -18,7 +18,7 @@ public class ConsumableTest {
 
 	}
 
-	private void testConsumableCreation(IProducer producer) {
+	private void testConsumableCreation(Human producer) {
 
 		final BigDecimal moneySupplyBeforeConsumableCreation = Money.MoneySupply.getTotalMoney();
 
