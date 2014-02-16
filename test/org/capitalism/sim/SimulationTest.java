@@ -9,6 +9,7 @@ import org.capitalism.FiscalProfile;
 import org.capitalism.Human;
 import org.capitalism.IConsumer.SpenderType;
 import org.capitalism.IProducer.ProfitType;
+import org.capitalism.ITransactor;
 import org.capitalism.Money;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,13 +26,13 @@ public class SimulationTest {
 		Human man3 = new Human(new FiscalProfile(ProfitType.LOW_PROFIT,
 				SpenderType.LOW_SPENDER));
 
-		ArrayList<Human> humans = new ArrayList<Human>();
+		ArrayList<ITransactor> humans = new ArrayList<ITransactor>();
 		humans.add(man1);
 		humans.add(man2);
 		humans.add(man3);
 
 		BigDecimal totalEquity = new BigDecimal(0);
-		Iterator<Human> itr = humans.iterator();
+		Iterator<ITransactor> itr = humans.iterator();
 		while (itr.hasNext()) {
 			totalEquity = totalEquity.add(itr.next().getMonetaryWorth());
 		}
@@ -44,7 +45,7 @@ public class SimulationTest {
 		}
 
 		BigDecimal newTotalEquity = new BigDecimal(0);
-		Iterator<Human> itr2 = humans.iterator();
+		Iterator<ITransactor> itr2 = humans.iterator();
 		while (itr2.hasNext()) {
 			newTotalEquity = newTotalEquity.add(itr2.next().getMonetaryWorth());
 		}
@@ -68,7 +69,7 @@ public class SimulationTest {
 	public void testSimWithNoHumans() {
 
 			Human man = new Human();
-			ArrayList<Human> humans = new ArrayList<Human>();
+			ArrayList<ITransactor> humans = new ArrayList<ITransactor>();
 			man.live(humans);
 			
 			humans.add(man);

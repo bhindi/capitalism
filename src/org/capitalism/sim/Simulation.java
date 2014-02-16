@@ -1,6 +1,5 @@
 package org.capitalism.sim;
 
-import java.io.Console;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -8,6 +7,7 @@ import org.capitalism.FiscalProfile;
 import org.capitalism.Human;
 import org.capitalism.IConsumer.SpenderType;
 import org.capitalism.IProducer.ProfitType;
+import org.capitalism.ITransactor;
 import org.capitalism.Money;
 
 public class Simulation {
@@ -21,10 +21,10 @@ public class Simulation {
 
 	}
 
-	ArrayList<Human> humans;
+	ArrayList<ITransactor> humans;
 
 	public Simulation() {
-		humans = new ArrayList<Human>();
+		humans = new ArrayList<ITransactor>();
 
 		SpenderType[] spendTypes = SpenderType.values();
 		ProfitType[] profitTypes = ProfitType.values();
@@ -52,7 +52,7 @@ public class Simulation {
 		while (true) {
 
 			for (int i = 0; i < NUM_HUMANS; i++) {
-				humans.get(i).live(humans);
+				((Human)humans.get(i)).live(humans);
 			}
 		}
 
